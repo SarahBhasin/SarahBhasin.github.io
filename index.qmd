@@ -1,10 +1,10 @@
 ---
-title: "YOUR NAME" 
+title: "Sarah Bhasin" 
 about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: img/profile.png
+  image: img/pic
   image-width: 16em
-  image-shape: round # rectangle  round  rounded
+  image-shape: rounded # rectangle  round  rounded
   
   links:
     - icon: linkedin
