@@ -12,10 +12,10 @@ about:
       href: https://www.linkedin.com/in/sarah-bhasin-55b5ab263/
     - icon: github
       text: GitHub
-      href: https://github.com/sarah_bhasin
+      href: https://github.com/sarahbhasin
     - icon: file-earmark-pdf
       text: Resumé
-      href: https://sarah_bhasin.github.io/resume-sarah.pdf
+      href: https://sarahbhasin.github.io/resume-sarah.pdf
     - icon: mailbox
       text: Email
       href: mailto:Seb32@geneseo.edu
