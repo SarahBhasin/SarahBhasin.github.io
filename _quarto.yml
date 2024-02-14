@@ -9,10 +9,12 @@ website:
     left:
       - text: Project
         href: project.qmd
+      - text: Quarto
+        href: danl-200-quarto.qmd
       - text: Blog
         href: blog-listing.qmd
   page-footer: 
-    center: "Powered with GitHub and Quarto<br>© YOUR NAME, 2023"
+    center: "Powered with GitHub and Quarto<br>© Sarah Bhasin, 2024"
 
 format:
   html:
