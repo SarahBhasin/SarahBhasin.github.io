@@ -95,21 +95,21 @@
     "href": "index.html",
     "title": "Sarah Bhasin",
     "section": "",
-    "text": "Finley Malloc majors in Data Analytics at SUNY Geneseo. When not working on data analytics, Finley enjoys spending time unicycling and playing with her pet iguana."
+    "text": "Sarah Bhasin majors in marketing and minors in communication at SUNY Geneseo. When not seeking new experiences in the business world, Sarah enjoys expressing her creativity through writing."
   },
   {
     "objectID": "index.html#education",
     "href": "index.html#education",
     "title": "Sarah Bhasin",
     "section": "Education",
-    "text": "Education\nState University of New York at Geneseo | Geneseo, NY  B.S. in Data Analytics | Aug 2022 - May 2026  Minor in Business Administration"
+    "text": "Education\nState University of New York at Geneseo | Geneseo, NY  B.S. in Marketing | Aug 2021 - May 2025  Minor in Communication"
   },
   {
     "objectID": "index.html#experience",
     "href": "index.html#experience",
     "title": "Sarah Bhasin",
     "section": "Experience",
-    "text": "Experience\nStarbucks Analytics | Data Analyst Intern | May 2024 - Aug 2024"
+    "text": "Experience\nRF SUNY | Marketing Intern | May 2023 - Dec 2023"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -124,5 +124,54 @@
     "title": "Welcome To My Blog",
     "section": "",
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html",
+    "href": "danl-200-hw-01-q (3).html",
+    "title": "Homework 1 - Part 3",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(skimr)"
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html#question-0.",
+    "href": "danl-200-hw-01-q (3).html#question-0.",
+    "title": "Homework 1 - Part 3",
+    "section": "Question 0.",
+    "text": "Question 0.\nProvide your GitHub username.\nAnswer:"
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html#question-1.",
+    "href": "danl-200-hw-01-q (3).html#question-1.",
+    "title": "Homework 1 - Part 3",
+    "section": "Question 1.",
+    "text": "Question 1.\nbase-R provides the R object state.name. Write an R code to assign state.name to a variable, US_states.\nAnswer:"
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html#question-2.",
+    "href": "danl-200-hw-01-q (3).html#question-2.",
+    "title": "Homework 1 - Part 3",
+    "section": "Question 2.",
+    "text": "Question 2.\nThe temp_F vector contains the average high temperatures in January for the following cities: Seoul, Lagos, Paris, Rio de Janeiro, San Juan, and Rochester.\n\ntemp_F &lt;- c(35, 88, 42, 84, 81, 30)\n\nCreate a new vector named temp_C that stores the converted Celsius temperatures. Below is the conversion formula:\n\\[\nC = \\frac{5}{9}\\times(F - 32)\n\\]\nAnswer:"
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html#question-3.",
+    "href": "danl-200-hw-01-q (3).html#question-3.",
+    "title": "Homework 1 - Part 3",
+    "section": "Question 3.",
+    "text": "Question 3.\n\nWrite an R code to calculate the standard deviation (SD) of the integer vector x below manually. That is to calculate the SD without using the sd() function.\n\n\nx &lt;- 1:25\n\n\nAlso, write an R code to test whether the standard deviation you calculate manually above is equal to sd(x).\n\nAnswer:"
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html#question-4.",
+    "href": "danl-200-hw-01-q (3).html#question-4.",
+    "title": "Homework 1 - Part 3",
+    "section": "Question 4.",
+    "text": "Question 4.\n\nWrite an R code to read the CSV file, https://bcdanl.github.io/data/mlb_teams.csv using the tidyverse’s read_csv() function, and assign it to MLB_teams.\n\nAnswer:"
+  },
+  {
+    "objectID": "danl-200-hw-01-q (3).html#question-5.",
+    "href": "danl-200-hw-01-q (3).html#question-5.",
+    "title": "Homework 1 - Part 3",
+    "section": "Question 5.",
+    "text": "Question 5.\nWrite an R code to provide summary statistics—mean, standard deviation, minimum, first quartile, median, third quartile, and maximum—for variables in the MLB_teams data.frame.\nAnswer:"
   }
 ]
