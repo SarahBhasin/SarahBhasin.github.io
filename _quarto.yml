@@ -9,7 +9,7 @@ website:
     left:
       - text: Project
         href: project.qmd
-      - text: Quarto
+      - text: R basics
         href: danl-200-quarto.qmd
       - text: Blog
         href: blog-listing.qmd
