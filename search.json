@@ -158,7 +158,7 @@
     "href": "blog-listing.html",
     "title": "Insightful Analytics",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nBeer Markets\n\n\n\n\n\n\n\n\n\nNov 2, 2023\n\n\nByeong-Hak Choe\n\n\n9 min\n\n\n\n\n\n\n  \n\n\n\n\nStarwars\n\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYour Name\n\n\n3 min\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\n\n\nOct 27, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nHoliday movies\n\n\n\n\n\n\n\n\n\nApr 29, 2024\n\n\nSarah Bhasin\n\n\n6 min\n\n\n\n\n\n\n  \n\n\n\n\nBeer Markets\n\n\n\n\n\n\n\n\n\nNov 2, 2023\n\n\nByeong-Hak Choe\n\n\n9 min\n\n\n\n\n\n\n  \n\n\n\n\nStarwars\n\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYour Name\n\n\n3 min\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\n\n\nOct 27, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "danl-200-hw-01-q (3).html",
@@ -243,5 +243,40 @@
     "title": "Welcome To My Blog",
     "section": "",
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/health/holiday.html",
+    "href": "posts/health/holiday.html",
+    "title": "Holiday movies",
+    "section": "",
+    "text": "pathname &lt;- \"https://bcdanl.github.io/data/holiday_movies_w_genres.csv\"\nholiday_movies &lt;- read_csv(pathname)"
+  },
+  {
+    "objectID": "posts/health/holiday.html#question-1.",
+    "href": "posts/health/holiday.html#question-1.",
+    "title": "Holiday movies",
+    "section": "Question 1.",
+    "text": "Question 1.\nProvide both (1) ggplot code and (2) a comment to describe how the relationship between log10(num_votes) and average_rating varies by genre.\nAnswer:\n\nggplot(data = holiday_movies) + \n  geom_point(mapping = \n               aes(x = log10(num_votes), \n                   y = average_rating, \n                   color = genre), alpha = .2 ) +\n  geom_smooth(mapping = \n               aes(x = log10(num_votes), \n                   y = average_rating))+\n  geom_smooth(mapping=\n                aes(x = log10(num_votes),\n                    y = average_rating),\n              method= lm, \n              color= \"red\") +\n  facet_wrap(genre ~ .)"
+  },
+  {
+    "objectID": "posts/health/holiday.html#question-2.",
+    "href": "posts/health/holiday.html#question-2.",
+    "title": "Holiday movies",
+    "section": "Question 2.",
+    "text": "Question 2.\nProvide both (1) ggplot code and (2) a comment to describe how the distribution of genre varies by title_type.\nAnswer:\n\nggplot(data = holiday_movies) + \n  geom_bar(mapping=\n               aes(y = genre,\n                   fill = genre),\n           show.legend = F)+\n           \n             \nfacet_wrap(~title_type)"
+  },
+  {
+    "objectID": "posts/health/holiday.html#question-3.",
+    "href": "posts/health/holiday.html#question-3.",
+    "title": "Holiday movies",
+    "section": "Question 3.",
+    "text": "Question 3.\nProvide both (1) ggplot code and (2) a comment to describe how the distribution of average_rating, such as quartile values and outliers, varies by genre and title_type.\nAnswer:\n\nggplot(data = holiday_movies) + \n  geom_boxplot(mapping = \n               aes(x = average_rating, y = genre,\n                   fill = genre, alpha = .2)) +\n                  \n             \nfacet_grid( title_type ~ .)\n\n\n\n\n\n## Question 4. Provide both (1) ggplot code and (2) a comment to describe how the distribution of log(num_votes) varies by genre.\nAnswer:\n\nggplot(data = holiday_movies) + \n  geom_histogram(mapping = \n               aes(x = log(num_votes), bins = 39,\n                   fill = genre),\n                   show.legend = F) +\n                  \n             \n  facet_wrap( genre ~ .)"
+  },
+  {
+    "objectID": "posts/health/holiday.html#question-5.",
+    "href": "posts/health/holiday.html#question-5.",
+    "title": "Holiday movies",
+    "section": "Question 5.",
+    "text": "Question 5.\nBelow is the data.frame, holiday_movies_genre_yearly, containing yearly mean value of average_rating for each genre.\n\nholiday_movies_genre_yearly &lt;- read_csv(\"https://bcdanl.github.io/data/holiday_movies_w_genres_yearly.csv\")\n\nProvide both (1) ggplot code and (2) a comment to describe how the yearly trend of average_rating varies by genre.\nAnswer:\n\nggplot(data = holiday_movies_genre_yearly) + \n  geom_line(mapping =\n               aes(x = year,\n                   y = average_rating)) +\n  geom_point(mapping=\n               aes(x= year,\n                   y = average_rating))+\n  geom_smooth(mapping=\n                aes(x = year,\n                    y = average_rating))+\n  geom_smooth(mapping=\n                aes(x= year,\n                    y = average_rating),\n              method = lm,\n              color = \"red\") +\n                  \n             \n  facet_wrap( genre ~ .)"
   }
 ]

@@ -1,0 +1,157 @@
+---
+title: "Holiday movies"
+author: "Sarah Bhasin"
+date: "2024-04-29"
+categories: [starwars, code, analysis]
+# image: "image.png"
+
+execute: 
+  warning: false
+  message: false
+  
+toc: true
+---
+```{r}
+#| include: false
+
+library(knitr)
+library(rmarkdown)
+library(tidyverse)
+library(skimr)
+library(ggthemes)
+library(hrbrthemes)
+
+theme_set(theme_ipsum()+
+          theme(strip.background =element_rect(fill="lightgray"),
+                axis.title.x  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(10,0,0,0)),
+                axis.title.y  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(0,10,0,0))
+                )
+          )
+```
+
+
+```{r}
+pathname <- "https://bcdanl.github.io/data/holiday_movies_w_genres.csv"
+holiday_movies <- read_csv(pathname)
+```
+
+## Question 1.
+Provide both (1) `ggplot` code and (2) a comment to describe how the relationship between `log10(num_votes)` and `average_rating` varies by `genre`.
+
+*Answer*:
+```{r}
+ggplot(data = holiday_movies) + 
+  geom_point(mapping = 
+               aes(x = log10(num_votes), 
+                   y = average_rating, 
+                   color = genre), alpha = .2 ) +
+  geom_smooth(mapping = 
+               aes(x = log10(num_votes), 
+                   y = average_rating))+
+  geom_smooth(mapping=
+                aes(x = log10(num_votes),
+                    y = average_rating),
+              method= lm, 
+              color= "red") +
+  facet_wrap(genre ~ .)
+
+```
+
+<br><br>
+
+## Question 2.
+Provide both (1) `ggplot` code and (2) a comment to describe how the distribution of `genre` varies by `title_type`.
+
+
+*Answer*:
+```{r}
+ggplot(data = holiday_movies) + 
+  geom_bar(mapping=
+               aes(y = genre,
+                   fill = genre),
+           show.legend = F)+
+           
+             
+facet_wrap(~title_type)
+```
+
+
+<br><br>
+
+
+## Question 3.
+Provide both (1) `ggplot` code and (2) a comment to describe how the distribution of `average_rating`, such as quartile values and outliers, varies by `genre` and `title_type`.
+
+
+*Answer*:
+```{r}
+ggplot(data = holiday_movies) + 
+  geom_boxplot(mapping = 
+               aes(x = average_rating, y = genre,
+                   fill = genre, alpha = .2)) +
+                  
+             
+facet_grid( title_type ~ .)
+```
+
+
+<br><br>
+
+
+ ## Question 4.
+Provide both (1) `ggplot` code and (2) a comment to describe how the distribution of `log(num_votes)` varies by `genre`.
+
+*Answer*:
+```{r}
+ggplot(data = holiday_movies) + 
+  geom_histogram(mapping = 
+               aes(x = log(num_votes), bins = 39,
+                   fill = genre),
+                   show.legend = F) +
+                  
+             
+  facet_wrap( genre ~ .)
+```
+
+
+<br><br>
+
+
+## Question 5.
+Below is the data.frame, `holiday_movies_genre_yearly`, containing yearly mean value of `average_rating` for each `genre`.
+
+```{r}
+holiday_movies_genre_yearly <- read_csv("https://bcdanl.github.io/data/holiday_movies_w_genres_yearly.csv")
+```
+
+Provide both (1) `ggplot` code and (2) a comment to describe how the yearly trend of `average_rating` varies by `genre`.
+
+
+
+*Answer*:
+```{r}
+ggplot(data = holiday_movies_genre_yearly) + 
+  geom_line(mapping =
+               aes(x = year,
+                   y = average_rating)) +
+  geom_point(mapping=
+               aes(x= year,
+                   y = average_rating))+
+  geom_smooth(mapping=
+                aes(x = year,
+                    y = average_rating))+
+  geom_smooth(mapping=
+                aes(x= year,
+                    y = average_rating),
+              method = lm,
+              color = "red") +
+                  
+             
+  facet_wrap( genre ~ .)
+```
+
+
