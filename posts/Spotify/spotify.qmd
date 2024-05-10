@@ -1,0 +1,207 @@
+---
+title: "Spotify"
+author: "Sarah Bhasin"
+date: "2024-05-10"
+categories: [spotify, code, analysis]
+image: "spotify.png"
+
+execute: 
+  warning: false
+  message: false
+  
+toc: true
+---
+```{r}
+#| include: false
+
+library(knitr)
+library(rmarkdown)
+library(tidyverse)
+library(skimr)
+library(ggthemes)
+library(hrbrthemes)
+
+theme_set(theme_ipsum()+
+          theme(strip.background =element_rect(fill="lightgray"),
+                axis.title.x  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(10,0,0,0)),
+                axis.title.y  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(0,10,0,0))
+                )
+          )
+```
+
+Let's analyze the `spotify` data:
+
+# Question 1
+
+For Question 1, run the following R command to read the CSV file, `spotify_all.csv` as data.frame, `spotify_all`:
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+spotify_all <- read_csv('https://bcdanl.github.io/data/spotify_all.csv')
+```
+
+```{r}
+#| echo: false
+#| eval: true
+rmarkdown::paged_table(spotify_all)
+```
+
+<br>
+
+The data.frame `spotify_all` includes information about Spotify users' playlists.
+
+  - The unit of observation in `spotify_all` is a track in a music playlist.
+
+<br>
+
+## Variable Description
+
+- `pid`: playlist ID; unique ID for playlist
+  
+- `playlist_name`: a name of playlist
+  
+- `pos`: a position of the track within a playlist (starting from 0)
+  
+- `artist_name`: name of the track's primary artist
+  
+- `track_name`: name of the track
+  
+- `duration_ms`: duration of the track in milliseconds
+  
+- `album_name`: name of the track's album
+
+<br>
+
+## Q1a
+
+- Find the ten most popular song.
+  - A value of a song is defined as a combination of a `artist_name` value and a `track_name` value. 
+  - Who are artists for those ten most popular song?
+
+*Answer:*
+```{r}
+df_popular <- spotify_all |>
+  group_by(artist_name, track_name) |>
+  summarise(popularity = n())|>
+  arrange(desc(popularity))
+
+top_ten <- df_popular |>
+  slice(1:10)
+
+
+```
+
+<br><br>
+
+## Q1b
+
+-   Find the five most popular artist in terms of the number of occurrences in the data.frame, `spotify_all`.
+-   What is the most popular song for each of the five most popular artist?
+
+
+*Answer:*
+```{r}
+top_5_pop_artist <- spotify_all |> 
+  group_by(artist_name) |> 
+  summarize(freq= n()) |>
+  arrange(desc(freq)) |>
+  slice_head (n = 5)
+
+pop_top_5 <- spotify_all |>
+  count(artist_name, track_name) |>
+  filter(artist_name %in% top_5_pop_artist$artist_name) |>
+  arrange(artist_name, -n) |>
+  group_by(artist_name) |>
+  slice_max (n, n = 1)
+
+```
+
+<br><br>
+
+
+## Q1c
+- Create a data.frame named `drake_one_dance` that includes all playlists featuring the song where `track_name` equals "One Dance" and `artist_name` equals "Drake".
+  - Ensure that the data.frame `drake_one_dance` does not contain any playlists where the song "One Dance" by Drake is absent.
+
+- What is the song with the highest frequency of appearances after Drake’s “One Dance” in the newly created data.frame, `drake_one_dance`?
+
+*Answer:*
+```{r}
+drake <- spotify_all |>
+  filter(track_name == "One Dance", artist_name == "Drake")|>
+  distinct(pid)
+
+drake_one_dance <- spotify_all |>
+  filter(pid %in% drake$pid)
+
+high_freq_drake_one_dance <- drake_one_dance |>
+  group_by(artist_name, track_name) |>
+  summarize(frequency =n()) |>
+  arrange(desc(frequency))
+```
+
+<br><br>
+
+
+## Q1d
+
+Provide both (1) ggplot code and (2) a couple of sentences to describe how the distribution of `pos` varies by the ten most popular artists.
+
+
+*Answer:*
+```{r}
+top_10_pop_artist <- spotify_all |> 
+  group_by(artist_name) |> 
+  summarize(freq= n()) |>
+  arrange(desc(freq)) |>
+  
+  slice_head (n = 10)
+
+top10_pos <- spotify_all |> 
+  filter(artist_name %in% top_10_pop_artist$artist_name)
+
+ggplot(data = top10_pos) +
+  geom_boxplot(mapping =
+                 aes(x = pos,
+                     y = artist_name))
+  
+
+
+
+
+
+
+
+```
+Based on the data visualization, the ten most popular artists are likely to have songs in the beginning of a songs playlist (their order placement being within the first 50 songs). Additionally, the median Rhianna is one of the lowest, meaning her songs are in the beginning of the playlists compared to others. 
+
+
+
+<br><br>
+
+## Q1e
+.Create the data.frame with `pid`-`artist` level of observations with the following four variables:
+
+-   `pid`: playlist id
+-   `playlist_name`: name of playlist
+-   `artist`: name of the track's primary artist, which appears only once within a playlist
+-   `n_artist`: number of occurrences of artist within a playlist
+
+
+*Answer:*
+```{r}
+pid_artist <- spotify_all |>
+  group_by(pid, playlist_name, artist_name) |>
+  count() |>
+  rename(n_artist = n)
+
+```
+
+
