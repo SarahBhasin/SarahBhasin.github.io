@@ -2,8 +2,8 @@
 title: "Holiday movies"
 author: "Sarah Bhasin"
 date: "2024-04-29"
-categories: [starwars, code, analysis]
-# image: "image.png"
+categories: [holiday, code, analysis]
+image: "download.jpg"
 
 execute: 
   warning: false
