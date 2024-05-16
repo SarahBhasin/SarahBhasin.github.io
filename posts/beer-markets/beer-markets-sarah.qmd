@@ -59,13 +59,11 @@ demographic data:  including gender, marital status, household income, class of 
 
 # Introduction
 
-About this project: The consumption of beer and alcohol is popular throughout the United States. Because of this, a lot of jobs and lives of Americans revolve around this product. This data frame offers a lot of information about that beer market, and is important to analyze to draw conclusions about business strategies and real-world conclusions.
+About this project: The consumption of beer and alcohol is popular throughout the United States. Because of this, a lot of jobs and lives of Americans revolve around this product. This data frame offers a lot of information about that beer market, and it is important to analyze it in order to draw conclusions about business strategies and real-world conclusions.
 
 <br><br>
 
-The Problem: How can this data frame be beneficial to companies attempting to enter the market force, consumers, and ?
-
-Though all of the sales are tracked there is never a good way to compare if you are getting a good price, comparing several of these factors would help to show if you are getting the most for your money, or if you are being scammed.
+The Problem: How can this data frame be beneficial to companies attempting to enter the market force?
 
 # Data
 
@@ -86,41 +84,46 @@ skim(beer_markets) |>
   select(-n_missing)
 ```
 
+## Cable Analysis 
 
-## Beer_floz to price_per_floz
-The following histogram shows how the distribution of 'price_per_floz' varies by 'beer_floz'.
+To begin, it's important to understand the target market of beer consumers. Whether or not a lot of beer consumers invest in cable can tell us about their habits around tv. 
 
 
 ```{r}
-ggplot(beer_markets, aes(x = price_per_floz)) +
-  geom_histogram(binwidth = 0.01, fill = "Black") +
-  labs(title = "Distribution of Price per fl. oz",
-       x = "Price per fl. oz",
-       y = "Frequency")
+premium_cable_analysis <- beer_markets |>
+  group_by(tvcable) |>
+  summarise(avg_beer_purchases = mean(quantity))
+
+
+ggplot(data = premium_cable_analysis, aes(x = tvcable, y = avg_beer_purchases, fill = tvcable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Beer Purchases by TV Cable Subscription Type",
+       x = "TV Cable Subscription",
+       y = "Average Beer Purchases",
+       fill = "TV Cable Subscription") +
+  theme_minimal()
 ```
+
+
+There is a slight increase in purchases from consumers who have premium cable, but the data is close enough for me to say that there may not be a significant difference. Therefore, with this information, it is hard to say if having cable/watching cable has a big association with beer purchases. 
+
+
+# Price Sensitivity
+
+It's important to know if households are sensitive to price change when pricing a product. To reduce risk, one should analyze consumer price sensitivity before making big price adjustments. 
 
 ```{r}
-ggplot(beer_markets, aes(x = beer_floz)) +
-  geom_histogram(binwidth = 350, fill = "Black") +
-  labs(title = "Distribution of Beer fl. oz",
-       x = "Beer fl. oz",
-       y = "Frequency")
+price_sensitivity <- beer_markets |>
+  mutate(price_per_ounce = dollar_spent / beer_floz)
+
+ggplot(data = price_sensitivity, aes(x = price_per_ounce, y = quantity)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Price Sensitivity Analysis",
+       x = "Price per Fluid Ounce",
+       y = "Quantity Purchased") +
+  theme_minimal()
 ```
-
-```{r}
-Floz_to_price <- beer_markets |> 
-  select(beer_floz, price_per_floz) |> 
-  mutate(
-    beer_price_per_floz = beer_floz * price_per_floz) |> 
-  arrange(-beer_price_per_floz)
-
-#This shows what the price of a beer would be by the cost per fl. oz
-```
-
-
-# Dollar Spent to Quantity
-
-This will show the amount of money that someone is spending to by a beer or a pack of them depending on the quantity that they are buying
+As we can see, as quantity increases, price per fluid ounce decreases. Because of this negative relation, we can say that consumers are price sensitive. 
 
 
 ```{r}
@@ -130,40 +133,17 @@ ggplot(beer_markets, aes(x = dollar_spent)) +
        x = "Dollar Spent",
        y = "Frequency")
 ```
+As we can see, the distribution is skewed right, meaning that consumers are spending a lower amount of dollars on beer. With this information, companies can understand that higher pricing is not a good strategy. Since consumers prefer to pay lower, employing discounts/low prices is a better strategy.
 
-```{r}
-ggplot(beer_markets, aes(x = quantity)) +
-  geom_histogram(binwidth = 1, fill = "Black") +
-  labs(title = "Distribution of Quantity Bought",
-       x = "Quantity",
-       y = "Frequency")
-```
-
-```{r}
-ggplot(beer_markets, aes(x = dollar_spent, y = quantity)) +
-  geom_point(color = "Black", alpha = 0.1) +
-  geom_smooth() +
-  labs(title = "Dollar Spent vs Quantity",
-       x = "Dollar Spent",
-       y = "Quantity")
-
-#In this scatter plot we can see that it is heavily skewed towards the bottom left, meaning more people buy small amount of beer and that it doesn't cost them a lot of money
-```
-
-
-#Signifcance
-
-Being able to identify how much people are spending on alcohol, how much they are buying, and what their living conditions are, could be used to help resource groups for alcohol abuse. With this information, they can persuade those addicted to quit by projecting viusals to help them realize how much they are truly spending.  We can also identify what households are buying a lot of alcohol. This is important as alcohol can lead to abuse to other people in the household, so one should keep track with who is buying what and keeping track of higher buyers.
 
 ##References
 ```{r}
 beer_markets <- read_csv("https://bcdanl.github.io/data/beer_markets_all.csv")
 ```
 
-
-
-
 ## State and brand 
+
+Understanding which states and brand yield high quantities in the purchase of beer can help companies understand popular locations for beer as well as the main brand competitors in the locations. 
 
 
 ```{r}
@@ -222,7 +202,9 @@ North Carolina: Bud Light
 This will tell a company interested in entering those specific states (which are the top 5 states that purchased the most beer) who their top competitors will be. 
 
 
+## Promotion and dollar_spent
 
+Understanding whether promotions for beers are successful in sales-- dollar spent by consumers-- is important for businesses who are looking for new marketing strategies. In the following data frame, we will see if promotions yield higher dollar_spent, and if so, which demographic of people are purchasing? 
 
 ```{r}
 promo_dollar <- beer_markets |>
@@ -232,16 +214,46 @@ promo_dollar_spent <- promo_dollar |>
 group_by(promo) |>
 summarize(avg_dollar_spent = mean(dollar_spent))
 
+promo_response <- promo_dollar |>
+  group_by(promo,buyertype, age) |>
+  summarise(avg_dollar_spent = mean(dollar_spent)) |>
+  arrange(desc(avg_dollar_spent))
+
+ggplot(promo_response, aes(x = age, y = avg_dollar_spent, fill = promo)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Dollar Spent by Promotion Type and Age Group",
+       x = "Age Group",
+       y = "Average Dollar Spent",
+       fill = "Promotion Type") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  facet_wrap(~ buyertype)
+```
+This visualization shows that there were more purchases of beer (higher average dollar spent for the households) made on promotion than not on promotion. We can see that promotions are beneficial to the sale of beer. Additionally, for beers on promotion, males aged under 30 and aged 40-49 have the highest average dollar spent on beer than the other demographic groups. This information can help beer companies understand that promotions yield benefits in sales, and that young and middle ages males are their best customers for promotions.
+
+## Container analysis 
+
+When researching the beer market, it's important to ask:
+What are the most popular container types for purchasing beer?
+
+```{r}
+# Aggregate beer purchases by container type
+container_distribution <- beer_markets |>
+  group_by(container) |>
+  summarise(total_purchases = n())
+
+# Calculate percentage of purchases for each container type
+container_distribution$percentage <- container_distribution$total_purchases / sum(container_distribution$total_purchases) * 100
+
+ggplot(data = container_distribution, aes(x = container, y = percentage)) +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  labs(title = "Distribution of Beer Purchases by Container Type",
+       x = "Container Type",
+       y = "Percentage of Purchases") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
-
-
-git add . 
-
-git commit -m "beer"
-
-git push 
-
-
+As you can see, most of the beers that are purchased are can. This tells us a lot about our target market, specifically that they prefer cans. This can be for majority of reasons, one being that they are easily disposable. Can types being most popular also may tell a researcher that a lot of beers are used for parties. Overall, a company can use this information to change their product design to best fit consumer needs. 
 
 
