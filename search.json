@@ -418,5 +418,12 @@
     "title": "Beer Markets",
     "section": "Container analysis",
     "text": "Container analysis\nWhen researching the beer market, it’s important to ask: What are the most popular container types for purchasing beer?\n\n# Aggregate beer purchases by container type\ncontainer_distribution &lt;- beer_markets |&gt;\n  group_by(container) |&gt;\n  summarise(total_purchases = n())\n\n# Calculate percentage of purchases for each container type\ncontainer_distribution$percentage &lt;- container_distribution$total_purchases / sum(container_distribution$total_purchases) * 100\n\nggplot(data = container_distribution, aes(x = container, y = percentage)) +\n  geom_bar(stat = \"identity\", fill = \"skyblue\", color = \"black\") +\n  labs(title = \"Distribution of Beer Purchases by Container Type\",\n       x = \"Container Type\",\n       y = \"Percentage of Purchases\") +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1))\n\n\n\n\nAs you can see, most of the beers that are purchased are can. This tells us a lot about our target market, specifically that they prefer cans. This can be for majority of reasons, one being that they are easily disposable. Can types being most popular also may tell a researcher that a lot of beers are used for parties. Overall, a company can use this information to change their product design to best fit consumer needs."
+  },
+  {
+    "objectID": "posts/beer-markets/beer-markets-sarah.html#conclusion",
+    "href": "posts/beer-markets/beer-markets-sarah.html#conclusion",
+    "title": "Beer Markets",
+    "section": "Conclusion",
+    "text": "Conclusion\nUnderstanding competition, target markets, trends, and demographics are important to mitigate risk when entering an industry. This data frame allows for insight into the Beer industry, and is useful data for a market researcher interested in taking decision-filled-steps to better their company."
   }
 ]
